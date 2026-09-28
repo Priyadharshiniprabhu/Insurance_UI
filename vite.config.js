@@ -8,6 +8,8 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       "/dashboard": "http://localhost:8080",
+      "/reports": "http://localhost:8080",
+      "/schedulers": "http://localhost:8080",
       "/policies": "http://localhost:8080",
       "/dlq": "http://localhost:8080"
     }

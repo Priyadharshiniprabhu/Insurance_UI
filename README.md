@@ -14,9 +14,9 @@ npm.cmd run dev
 
 Open `http://localhost:5173`.
 
-The Vite development server proxies `/policies` and `/dlq` to the backend, so no backend changes or CORS configuration are required for the existing policy and DLQ flows.
+The Vite development server proxies `/dashboard`, `/policies`, `/dlq`, `/reports`, and `/schedulers` to the backend, so no CORS configuration is required for these flows.
 
-The dashboard, report, and scheduler screens are ready for the corresponding REST APIs. The current backend does not expose summary, policy-list, report, or scheduler-management endpoints, so those screens show an explicit unavailable state instead of displaying fabricated data.
+The dashboard and scheduler screens load summary and schedule data from the backend. Reports can be generated and downloaded using the existing daily report generator. The backend does not expose a paginated policy-list endpoint, so the Policies screen supports lookup by policy number.
 
 ## Project structure
 

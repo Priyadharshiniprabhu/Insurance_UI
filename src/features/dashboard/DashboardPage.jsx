@@ -6,12 +6,16 @@ import { PanelTitle, Unavailable } from "../../components/Ui";
 export default function DashboardPage({ onNavigate }) {
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   async function load() {
+    setIsLoading(true);
     try {
       setError("");
-      setSummary(await api("/dashboard/summary"));
+      setSummary(await api("/dashboard/summary", { cache: "no-store" }));
     } catch (err) {
       setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   }
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function DashboardPage({ onNavigate }) {
   }, []);
   const cards = [["Total policies", summary?.totalPolicies, Users, "total"], ["ACTIVE", summary?.active, CheckCircle2, "active"], ["RENEWED", summary?.renewed, RefreshCw, "renewed"], ["OVER_DUE", summary?.overDue ?? summary?.overdue, Clock3, "overdue"]];
   return <section className="stack">
-    <div className="welcome"><div><small className="kicker mint">Operations overview</small><h2>Policy health at a glance</h2><p>Monitor lifecycle status, renewal movement, and notification exceptions.</p></div><button className="outline-button" onClick={load}><RefreshCw size={15} /> Refresh</button></div>
+    <div className="welcome"><div><small className="kicker mint">Operations overview</small><h2>Policy health at a glance</h2><p>Monitor lifecycle status, renewal movement, and notification exceptions.</p></div><button className="outline-button" type="button" onClick={load} disabled={isLoading}><RefreshCw className={isLoading ? "refreshing" : ""} size={15} />{isLoading ? "Refreshing..." : "Refresh"}</button></div>
     {error && <Unavailable message={`Dashboard counts are unavailable: ${error}`} />}
     <div className="stats">{cards.map(([label, value, Icon, kind]) => <div className="stat" key={label}><span className={`stat-icon ${kind}`}><Icon size={18} /></span><small>{label}</small><strong>{value ?? "—"}</strong><em>Current count</em></div>)}</div>
     <div className="split">
