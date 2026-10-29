@@ -4,6 +4,7 @@ import { NAVIGATION } from "./constants";
 import AppLayout from "./components/AppLayout";
 import DashboardPage from "./features/dashboard/DashboardPage";
 import PoliciesPage from "./features/policies/PoliciesPage";
+import RenewPolicyPage from "./features/policies/RenewPolicyPage";
 import CreatePolicyPage from "./features/policies/CreatePolicyPage";
 import DeadLettersPage from "./features/dlq/DeadLettersPage";
 import ReportsPage from "./features/reports/ReportsPage";
@@ -28,6 +29,7 @@ export default function App() {
       )}
       {view === "dashboard" && <DashboardPage onNavigate={setView} />}
       {view === "policies" && <PoliciesPage onNavigate={setView} />}
+      {view === "renew" && <RenewPolicyPage onNotify={notify} />}
       {view === "create" && <CreatePolicyPage onNotify={notify} />}
       {view === "dlq" && <DeadLettersPage onNotify={notify} />}
       {view === "reports" && <ReportsPage onNotify={notify} />}
